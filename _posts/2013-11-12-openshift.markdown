@@ -10,7 +10,7 @@ permalink: openshift
 
 ### Get OpenShift 
 
-OpenShift is a cloud computing Platform as a Service (PaaS) that makes it super easy to deploy apps online. It is open source and written in Ruby.
+OpenShift is a cloud computing Platform as a Service (PaaS) that makes it easy to deploy apps online. It is open source and written in Ruby.
 
 To get started [create an OpenShift Online account](https://openshift.redhat.com/app/account/new?web_user[promo_code]=railsgirls), which allows you to put three apps online for free. Once you are signed up, you can install the OpenShift RHC Client Tools by running these commands in a terminal and following the prompts:
 
@@ -27,7 +27,7 @@ __COACH__: Talk about the benefits of deploying to a PaaS such as OpenShift, as 
 
 #### Create OpenShift application
 
-We are going to create an OpenShift Ruby application with a PostgreSQL database, using a sample Rails application as our starting point. Before we do that, in your terminal change to the parent directory of the one containing your *railsgirls* code, probably called *projects*. The *cd* command below will take you there if you are currently in your *railsgirls* directory; if not, substitute another *cd* command.
+We are going to create an OpenShift Ruby application with a PostgreSQL database, using a sample OpenShift Rails application as our starting point. Before we do that, in your terminal change to the parent directory of the one containing your *railsgirls* code, probably called *projects*. The *cd* command below will take you there if you are currently in your *railsgirls* directory; if not, substitute another *cd* command.
 
 {% highlight sh %}
 cd ..
@@ -47,7 +47,7 @@ __COACH__: Explain version control systems and what 'git clone' means.
 
 #### Add version control
 
-We now have a sample app running in the cloud, but we really need only a few pieces from its codebase. Before we copy across the bits we need, we should put our Rails Girls app under version control with Git.
+We now have a sample app running in the cloud, but we actually need only a few pieces from its codebase. Before we copy across the bits we require, we should put our Rails Girls app under version control with Git.
 
 Change back to your *railsgirls* app directory and initialize it as a Git repository with the following commands:
 
@@ -136,7 +136,7 @@ __COACH__: Talk about relational databases.
 
 ### Deploy app to OpenShift
 
-We are now ready to deploy the Rails Girls app to OpenShift. We need to tell our Git repository where to push the code. To get the location of your OpenShift code repository, run the following command, and copy the Git URL. 
+We are now ready to deploy the Rails Girls app to OpenShift. We need to tell our Git repository where to push the code. To get the location of your OpenShift code repository, run the following command, and copy the Git URL from the output. 
 
 {% highlight sh %}
 rhc app show openshiftapp
@@ -172,7 +172,7 @@ Beneath the comment line:
 Add the line:
 
 {% highlight ruby %}
-config.logger = ActiveSupport::Logger.new(File.join(ENV['OPENSHIFT_RUBY_LOG_DIR'], "production-#{Time.now.strftime('%Y%m%d')}.log"))
+config.logger = ActiveSupport::Logger.new(File.join(ENV['OPENSHIFT_RUBY_LOG_DIR'], "production.log"))
 {% endhighlight %}
 
 You can tail your application's logs with the command `rhc tail openshiftapp` (the output from the change you just made won't show up until the new file has been committed and pushed to OpenShift).

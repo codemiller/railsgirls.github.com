@@ -12,7 +12,7 @@ permalink: openshift
 
 OpenShift is a cloud computing Platform as a Service (PaaS) that makes it easy to deploy apps online. It is open source and written in Ruby.
 
-To get started [create an OpenShift Online account](https://openshift.redhat.com/app/account/new?web_user[promo_code]=railsgirls), which allows you to put three apps online for free. Once you are signed up, you can install the OpenShift RHC Client Tools by running these commands in a terminal and following the prompts:
+To get started [create an OpenShift Online account](https://openshift.redhat.com/app/account/new?web_user[promo_code]=railsgirls), which allows you to put three apps online for free. Once you are signed up, install the OpenShift RHC Client Tools by running these commands in a terminal and following the prompts:
 
 {% highlight sh %}
 gem install rhc
@@ -110,7 +110,7 @@ with
 
 {% highlight ruby %}
 gem 'sqlite3', :group => [:development, :test]
-gem 'pg', :group => [:production, :staging]
+gem 'pg', :group => [:production]
 {% endhighlight %}
 
 Do a bundle to set up your dependencies:
@@ -189,11 +189,13 @@ with
 
 {% highlight ruby %}
 def store_dir
-  ENV['OPENSHIFT_DATA_DIR'] + "/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+  return "#{ENV['OPENSHIFT_DATA_DIR']}/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}" if ENV['OPENSHIFT_DATA_DIR']
+  "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
 end
 
 def url
-  "/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}/#{File.basename(file.path)}" 
+  return "/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}/#{File.basename(file.path)}" if ENV['OPENSHIFT_DATA_DIR']
+  super
 end
 {% endhighlight %}
 
@@ -210,6 +212,7 @@ This action hook code will run every time the OpenShift app is built, so the lin
 Commit your changes and push them to the cloud:
 
 {% highlight sh %}
+git add --all
 git commit -m "Added OpenShift environment variables"
 git push
 {% endhighlight %}

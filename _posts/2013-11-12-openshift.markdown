@@ -171,6 +171,8 @@ Add the line:
 config.logger = ActiveSupport::Logger.new(File.join(ENV['OPENSHIFT_RUBY_LOG_DIR'], "production.log"))
 {% endhighlight %}
 
+***Rails 3 users: Change 'ActiveSupport::Logger' to 'ActiveSupport::BufferedLogger'.***
+
 You can tail your application's logs with the command `rhc tail openshiftapp` (the output from the change you just made won't show up until the new file has been committed and pushed to OpenShift).
 
 __COACH__: Discuss the value of application logging.
@@ -189,12 +191,12 @@ with
 
 {% highlight ruby %}
 def store_dir
-  return "#{ENV['OPENSHIFT_DATA_DIR']}/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}" if ENV['OPENSHIFT_DATA_DIR']
-  "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+  prefix = ENV['OPENSHIFT_DATA_DIR'] ? "#{ENV['OPENSHIFT_DATA_DIR']}/" : ""
+  "#{prefix}uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
 end
 
 def url
-  return "/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}/#{File.basename(file.path)}" if ENV['OPENSHIFT_DATA_DIR']
+  return "/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}/#{File.basename(file.path)}" if ENV['OPENSHIFT_DATA_DIR'] && file
   super
 end
 {% endhighlight %}

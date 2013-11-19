@@ -19,7 +19,7 @@ gem install rhc
 rhc setup
 {% endhighlight %}
 
-The above instructions assume you installed Ruby using RVM or RailsInstaller. If you used another approach, there is more info about installing RHC for different set-ups in [this guide](https://www.openshift.com/developers/rhc-client-tools-install).
+The above instructions assume you installed Ruby using RVM or RailsInstaller. If you used another approach, there is more info about installing RHC for different set-ups in [this guide](https://www.openshift.com/developers/rhc-client-tools-install) (you may need to do `sudo gem install rhc`).
 
 __COACH__: Talk about the benefits of deploying to a PaaS such as OpenShift, as opposed to traditional servers. Discuss SSH and why we need to upload a public key to communicate securely.
 
@@ -42,7 +42,7 @@ rhc app create openshiftapp ruby-1.9 postgresql-9.2 --from-code=https://github.c
 
 The terminal output should include a URL; open a browser window and go to the application URL to view the sample Rails application (the URL will have the form http://openshiftapp-*yourdomain*.rhcloud.com).
 
-__COACH__: Explain version control systems and what 'git clone' means.
+__COACH__: Explain what Git is and why we use version control systems.
 
 
 #### Add version control
@@ -85,7 +85,7 @@ cp ../openshiftapp/config/database.yml config
 
   <div class="win">
 {% highlight sh %}
-xcopy /s /e ..\openshiftapp\.openshift .
+xcopy /e /i ..\openshiftapp\.openshift .openshift
 copy ..\openshiftapp\config\database.yml config
 {% endhighlight %}
   </div>
@@ -109,12 +109,8 @@ gem 'sqlite3'
 with
 
 {% highlight ruby %}
-group :development do
-  gem 'sqlite3'
-end
-group :production do
-  gem 'pg'
-end
+gem 'sqlite3', :group => [:development, :test]
+gem 'pg', :group => [:production, :staging]
 {% endhighlight %}
 
 Do a bundle to set up your dependencies:
@@ -132,7 +128,7 @@ git add --all
 git commit -m "Changed database to PostgreSQL"
 {% endhighlight %}
 
-__COACH__: Talk about relational databases.
+__COACH__: Talk about relational databases and the differences between SQLite and PostgreSQL.
 
 ### Deploy app to OpenShift
 
@@ -197,7 +193,7 @@ def store_dir
 end
 
 def url
-  "/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}/" + File.basename(file.path) 
+  "/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}/#{File.basename(file.path)}" 
 end
 {% endhighlight %}
 

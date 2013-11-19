@@ -119,7 +119,7 @@ Do a bundle to set up your dependencies:
 bundle install --without production
 {% endhighlight %}
 
-On some platforms, this may generate platform-specific versions of your Gems that cause issues when you push your app to the cloud. To prevent this, open your *Gemfile.lock* file and check the versions of the 'sqlite3' and 'pg' Gems. If they have a platform-specific suffix, such as *-x86-mingw32*, remove this (eg. change *pg (0.16.0-x86-mingw32)* to *pg (0.16.0)* and *sqlite3 (1.3.8-x86-mingw32)* to *sqlite3 (1.3.8)*) Save and close the file, and run the above bundle command again before continuing.
+On some platforms, this may generate platform-specific versions of your Gems that cause issues when you push your app to the cloud. To prevent this, open your *Gemfile.lock* file and check the versions of the 'sqlite3' and 'pg' Gems. If they have a platform-specific suffix, such as *-x86-mingw32*, remove this (eg. change *pg (0.16.0-x86-mingw32)* to *pg (0.16.0)* and *sqlite3 (1.3.8-x86-mingw32)* to *sqlite3 (1.3.8)*). Save and close the file, and run the above bundle command again before continuing.
 
 Add and commit your changes in Git:
 
@@ -220,12 +220,12 @@ __COACH__: Explain symbolic links.
 
 ### Push code to GitHub
 
-Now that your application is under source control with Git, you may also wish to share a copy with others on a Git repository website such as GitHub. To push your code to a GitHub repository, [create a repository](https://github.com/new) on GitHub and copy the SSH string (something like git@github.com:*username*/*reponame*.git). 
+Now that your application is under source control with Git, you may also wish to share a copy with others on a Git repository website such as GitHub. To push your code to a GitHub repository, [create a repository](https://github.com/new) on GitHub and copy the HTTPS string (something like https://github.com/username/reponame.git). 
 
-Navigate to your OpenShift app repository in the terminal and enter the following commands, replacing the SSH location with the string you copied:
+Navigate to your OpenShift app repository in the terminal and enter the following commands, replacing the HTTPS location with the string you copied:
 
 {% highlight sh %}
-git remote add github git@github.com:*username*/*reponame*.git
+git remote add github https://github.com/username/reponame.git
 git push github master 
 {% endhighlight %}
 

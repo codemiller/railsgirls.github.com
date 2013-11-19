@@ -119,7 +119,7 @@ Do a bundle to set up your dependencies:
 bundle install --without production
 {% endhighlight %}
 
-On some platforms, this may generate platform-specific versions of your Gems that cause issues when you push your app to the cloud. To prevent this, open your *Gemfile.lock* file and check the versions in brackets after the 'sqlite3' and 'pg' Gems. If they have a platform-specific suffix, such as *-x86-mingw32*, remove this, save and close the file, and run the above bundle command again before continuing.
+On some platforms, this may generate platform-specific versions of your Gems that cause issues when you push your app to the cloud. To prevent this, open your *Gemfile.lock* file and check the versions of the 'sqlite3' and 'pg' Gems. If they have a platform-specific suffix, such as *-x86-mingw32*, remove this (eg. change *pg (0.16.0-x86-mingw32)* to *pg (0.16.0)* and *sqlite3 (1.3.8-x86-mingw32)* to *sqlite3 (1.3.8)*) Save and close the file, and run the above bundle command again before continuing.
 
 Add and commit your changes in Git:
 
@@ -200,7 +200,7 @@ end
 Now uploaded images will be stored in a persistent directory, but they will still be available through the same URL as what we were using previously. To make this work, we also need to add a symbolic link on the filesystem from the repository location to the real storage location. To do this, open *.openshift/action_hooks/build* and add the following code:
 
 {% highlight sh %}
-if [ ! -d $OPENSHIFT_DATA_DIR/uploads ]; then mkdir $OPENSHIFT_DATA_DIR/uploads; fi
+mkdir -p $OPENSHIFT_DATA_DIR/uploads
 ln -sf $OPENSHIFT_DATA_DIR/uploads $OPENSHIFT_REPO_DIR/public/uploads
 
 {% endhighlight %}

@@ -1,4 +1,4 @@
-destination: ./railsgirls.github.com/_site
+destination: ./_site
 auto:        false
 lsi:         false
 server_port: 4000

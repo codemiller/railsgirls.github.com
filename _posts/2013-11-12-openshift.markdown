@@ -73,7 +73,7 @@ __COACH__: Explain the Git commands used and .gitignore.
 
 #### Copy sample app code
 
-We need the *.openshift* directory and *config/database.yml* file from the sample application in order for our Rails app to run on OpenShift. Copy these from the *openshiftapp* directory to the *railsgirls* directory. You can use Windows Explorer or another graphical file system tool to do this if you like, or alternatively run the following commands in your terminal:
+We need the *.openshift* directory and *config/database.yml* file from the sample application in order for our Rails app to run on OpenShift. Copy these from the *openshiftapp* directory to the *railsgirls* directory. You can use Windows Explorer or another graphical file system tool to do this if you like, or alternatively run the following commands from the *railsgirls* directory in your terminal:
 
 <div class="os-specific">
    <div class="nix">
@@ -123,7 +123,7 @@ Do a bundle to set up your dependencies:
 bundle install --without production
 {% endhighlight %}
 
-On some platforms, this may generate platform-specific versions of your Gems that cause issues when you push your app to the cloud. To prevent this, open your *Gemfile.lock* file and check the versions of the 'sqlite3' and 'pg' Gems. If they have a platform-specific suffix, such as *-x86-mingw32*, remove this (eg: change *'pg' (0.16.0-x86-mingw32)* to *'pg' (0.16.0)* and *'sqlite3' (1.3.8-x86-mingw32)* to *'sqlite3' (1.3.8)*. Save and close the file, and run the above bundle command again before continuing.
+On some platforms, this may generate platform-specific versions of your Gems that cause issues when you push your app to the cloud. To prevent this, open your *Gemfile.lock* file and check the versions in brackets after the 'sqlite3' and 'pg' Gems. If they have a platform-specific suffix, such as *-x86-mingw32*, remove this, save and close the file, and run the above bundle command again before continuing.
 
 Add and commit your changes in Git:
 
@@ -136,7 +136,7 @@ __COACH__: Talk about relational databases.
 
 ### Deploy app to OpenShift
 
-We are now ready to deploy the Rails Girls app to OpenShift. We need to tell our Git repository where to push the code. To get the location of your OpenShift code repository, run the following command, and copy the Git URL from the output (Windows users, you can right-click and select *Mark*, highlight text and hit *Enter* to copy content from Command Prompt). 
+We are now ready to deploy the Rails Girls app to OpenShift. We need to tell our Git repository where to push the code. To get the location of your OpenShift code repository, run the following command, and copy the Git URL from the output. 
 
 {% highlight sh %}
 rhc app show openshiftapp

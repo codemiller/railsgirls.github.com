@@ -86,7 +86,7 @@ cp ../openshiftapp/config/database.yml config
   <div class="win">
 {% highlight sh %}
 xcopy /s /e ..\openshiftapp\.openshift .
-cp ..\openshiftapp\config\database.yml config
+copy ..\openshiftapp\config\database.yml config
 {% endhighlight %}
   </div>
 </div>
